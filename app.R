@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(ggfortify)
+library(htmltools)
 
 # base plot (basic 20 x 20 grid), should allow negative values (like SLR) 
 base_p <- ggplot() +
@@ -20,16 +21,19 @@ ui <- fluidPage(
   titlePanel("Clicky Regression"),
   fluidRow(
     column(
-      6
+      4,
+      plotOutput("pointsPlot", click = "points_click", height = 500)
     ),
     column(
-      6,
-      plotOutput("pointsPlot", click = "points_click")
+      8,
+      plotOutput("regDiagnostics", height = 500)
     )
   ),
   fluidRow(
-    tags$h2("Diagnostics"),
-    plotOutput("regDiagnostics")
+    column(
+      4,
+      includeMarkdown("instructions.md")
+    )
   )
 )
 
